@@ -22,9 +22,11 @@ phases:
 
       - ls -la ../
       - echo "Synthesizing the CDK stack..."
-      - ls -la
-      - npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts
-      - cdk synth --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts"
+      - ls -la 
+      - cd cdk
+      - npx ts-node --prefer-ts-exts ./bin/cdk.ts
+      - cdk synth --app "npx ts-node --prefer-ts-exts ./bin/cdk.ts"
+      - cd ../
   build:
     commands:
       - echo "Packaging Lambda function..."
