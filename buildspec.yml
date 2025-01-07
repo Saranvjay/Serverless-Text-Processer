@@ -41,7 +41,8 @@ phases:
     
       - cdk deploy --app "npx ts-node --prefer-ts-exts ./bin/cdk.ts" --require-approval never
       - pwd
+      - ls -la
 artifacts:
   files:
-    - ./lambda/handler.zip  # Include the packaged Lambda function
+    - ./handler.zip  # Include the packaged Lambda function
     - cdk.out/**/*  # Include synthesized CDK output for deployment
