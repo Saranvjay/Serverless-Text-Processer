@@ -23,7 +23,6 @@ phases:
       
       - echo "Synthesizing the CDK stack..."
       - ls -la
-      - cd src
       - npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts
       - cdk synth --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts"
   build:
