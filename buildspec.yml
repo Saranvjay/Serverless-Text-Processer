@@ -34,7 +34,7 @@ phases:
   post_build:
     commands:
       - echo "Deploying the CDK stack..."
-      - cd ../cdk
+      - cd ../../cdk
       - cdk deploy --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts" --require-approval never
 artifacts:
   files:
