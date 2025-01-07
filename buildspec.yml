@@ -3,18 +3,20 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 18  # AWS CDK requires Node.js
+      nodejs: 18  # AWS CDK requires Node.js, use a supported LTS version
       python: 3.9  # Ensure compatibility with Lambda function
     commands:
       - echo "Installing dependencies..."
       - npm install -g aws-cdk  # Install AWS CDK globally
       - pip install -r requirements.txt  # Install Python dependencies (if any)
+
   pre_build:
-  commands:
-    - echo "Checking AWS CDK version..."
-    - cdk --version  # Verify CDK is installed correctly
-    - echo "Synthesizing the CDK stack..."
-    - cdk synth --app "npx ts-node --prefer-ts-exts bin/cdk.ts"  # Add the --app argument with the correct entry point path
+    commands:
+      - echo "Checking AWS CDK version..."
+      - cdk --version  # Verify CDK is installed correctly
+      - echo "Synthesizing the CDK stack..."
+      - cdk synth --app "npx ts-node --prefer-ts-exts bin/cdk.ts"  # Specify the entry point of the CDK app
+
   build:
     commands:
       - echo "Running unit tests..."
@@ -23,10 +25,12 @@ phases:
       - cd lambda
       - zip -r function.zip .  # Package the Lambda function
       - cd ..
+
   post_build:
     commands:
       - echo "Deploying the CDK stack..."
       - cdk deploy --require-approval never  # Deploy the stack without manual approval
+
 artifacts:
   files:
     - lambda/function.zip  # Include the packaged Lambda function
