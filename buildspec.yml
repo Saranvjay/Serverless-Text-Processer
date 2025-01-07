@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 16  # AWS CDK requires Node.js
+      nodejs: 18  # AWS CDK requires Node.js
       python: 3.9  # Ensure compatibility with Lambda function
     commands:
       - echo "Installing dependencies..."
