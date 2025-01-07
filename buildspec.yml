@@ -28,7 +28,7 @@ phases:
   build:
     commands:
       - echo "Packaging Lambda function..."
-      - cd lambda
+      - cd cdk/lambda
       - zip handler.zip handler.py
       - mv handler.zip ../cdk
   post_build:
@@ -38,5 +38,5 @@ phases:
       - cdk deploy --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts" --require-approval never
 artifacts:
   files:
-    - lambda/handler.zip  # Include the packaged Lambda function
+    - cdk/lambda/handler.zip  # Include the packaged Lambda function
     - cdk.out/**/*  # Include synthesized CDK output for deployment
