@@ -4,7 +4,6 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
-import * as path from 'path';
 import * as s3n from 'aws-cdk-lib/aws-s3-notifications'; // Import s3 notifications
 
 export class CdkStack extends cdk.Stack {
@@ -26,14 +25,14 @@ export class CdkStack extends cdk.Stack {
 
     // Define a Lambda function
     const lambdaFunction = new lambda.Function(this, 'ProcessFileFunction', {
-      runtime: lambda.Runtime.PYTHON_3_9,  // Python runtime
-      handler: 'handler.main',             // Assuming the handler is in handler.py, with a function called main
-      code: lambda.Code.fromAsset(path.join(__dirname, '../src/lambda')),  // Correct path to the Lambda code in src/lambda
+      runtime: lambda.Runtime.PYTHON_3_9,
+      handler: 'handler.main',
+      code: lambda.Code.fromAsset('./lambda'), // Path to your Lambda function code
       environment: {
-      BUCKET_NAME: bucket.bucketName,
-      TABLE_NAME: table.tableName,
+        BUCKET_NAME: bucket.bucketName,
+        TABLE_NAME: table.tableName,
       },
-      });
+    });
 
     // Grant necessary permissions to the Lambda function
     bucket.grantRead(lambdaFunction);
