@@ -34,8 +34,8 @@ phases:
   post_build:
     commands:
       - echo "Deploying the CDK stack..."
-      - cd ../
-      - cdk deploy --app "npx ts-node --prefer-ts-exts ./bin/cdk.ts" --require-approval never
+      - cd ../../
+      - cdk deploy --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts" --require-approval never
 artifacts:
   files:
     - handler.zip  # Include the packaged Lambda function
