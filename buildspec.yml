@@ -31,4 +31,3 @@ artifacts:
   files:
     - lambda/function.zip  # Include the packaged Lambda function
     - cdk.out/**/*  # Include synthesized CDK output for deployment
-
