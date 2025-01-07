@@ -4,6 +4,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
+import * as path from 'path';
 import * as s3n from 'aws-cdk-lib/aws-s3-notifications'; // Import s3 notifications
 
 export class CdkStack extends cdk.Stack {
