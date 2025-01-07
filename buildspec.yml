@@ -16,6 +16,22 @@ phases:
       - node -v # Node.js version
       - npm -v # NPM version
       - cdk --version  # Verify CDK is installed correctly
+      - echo "Listing contents of the 'lambda' directory:"
+      - ls -la ../lambda/  # Verify lambda directory contents
+
+      # Print the current folder path
+      - echo "Current folder path is:"
+      - pwd
+
+      # List contents of the current directory
+      - echo "Contents of the current directory:"
+      - ls -la
+
+      # Navigate to the parent directory and list its contents
+      - echo "Contents of the parent directory:"
+      - cd ..
+      - ls -la
+      
       - echo "Synthesizing the CDK stack..."
       - npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts
       - cdk synth --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts"
