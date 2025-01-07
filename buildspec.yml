@@ -44,5 +44,5 @@ phases:
       - ls -la
 artifacts:
   files:
-    - ./handler.zip  # Include the packaged Lambda function
+    - cdk/handler.zip  # Include the packaged Lambda function
     - cdk.out/**/*  # Include synthesized CDK output for deployment
