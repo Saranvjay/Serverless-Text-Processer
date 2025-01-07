@@ -27,7 +27,7 @@ export class CdkStack extends cdk.Stack {
     const lambdaFunction = new lambda.Function(this, 'ProcessFileFunction', {
       runtime: lambda.Runtime.PYTHON_3_9,
       handler: 'handler.main',
-      code: lambda.Code.fromAsset('../lambda'), // Path to your Lambda function code
+      code: lambda.Code.fromAsset('./lambda'), // Path to your Lambda function code
       environment: {
         BUCKET_NAME: bucket.bucketName,
         TABLE_NAME: table.tableName,
