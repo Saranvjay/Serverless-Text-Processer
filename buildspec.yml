@@ -15,7 +15,8 @@ phases:
       - echo "Checking AWS CDK version..."
       - cdk --version  # Verify CDK is installed correctly
       - echo "Synthesizing the CDK stack..."
-      - cdk synth --app "npx ts-node --prefer-ts-exts bin/cdk.ts"  # Specify the entry point of the CDK app
+      - cdk synth --app "npx ts-node --prefer-ts-exts ./cdk/cdk.ts"
+      # Specify the entry point of the CDK app
 
   build:
     commands:
