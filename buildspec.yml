@@ -17,7 +17,8 @@ phases:
       - npm -v # NPM version
       - cdk --version  # Verify CDK is installed correctly
       - echo "Listing contents of the 'lambda' directory:"
-      - ls -la ../lambda/  # Verify lambda directory contents
+      - pwd  # Verify lambda directory contents
+      - ls -la ../  # Verify lambda directory contents
 
       # Print the current folder path
       - echo "Current folder path is:"
