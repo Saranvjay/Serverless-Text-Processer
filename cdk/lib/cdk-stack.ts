@@ -25,14 +25,14 @@ export class CdkStack extends cdk.Stack {
 
     // Define a Lambda function
     const lambdaFunction = new lambda.Function(this, 'ProcessFileFunction', {
-      runtime: lambda.Runtime.PYTHON_3_9,
-      handler: 'handler.main',
-      code: lambda.Code.fromAsset('./lambda'), // Path to your Lambda function code
+      runtime: lambda.Runtime.PYTHON_3_9,  // Python runtime
+      handler: 'handler.main',             // Assuming the handler is in handler.py, with a function called main
+      code: lambda.Code.fromAsset(path.join(__dirname, '../src/lambda')),  // Correct path to the Lambda code in src/lambda
       environment: {
-        BUCKET_NAME: bucket.bucketName,
-        TABLE_NAME: table.tableName,
+      BUCKET_NAME: bucket.bucketName,
+      TABLE_NAME: table.tableName,
       },
-    });
+      });
 
     // Grant necessary permissions to the Lambda function
     bucket.grantRead(lambdaFunction);
