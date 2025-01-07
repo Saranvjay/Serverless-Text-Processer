@@ -35,7 +35,7 @@ phases:
     commands:
       - echo "Deploying the CDK stack..."
       - cd ../cdk
-      - cdk deploy --app "npx ts-node --prefer-ts-exts ./bin/cdk.ts" --require-approval never
+      - cdk deploy --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts" --require-approval never
 artifacts:
   files:
     - lambda/handler.zip  # Include the packaged Lambda function
