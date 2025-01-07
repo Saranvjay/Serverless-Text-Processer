@@ -1,35 +1,45 @@
 version: 0.2
+
 phases:
   install:
     runtime-versions:
       nodejs: 18
       python: 3.9
     commands:
-      - echo "Installing dependencies..."
-      - npm install aws-cdk-lib  # Install the AWS CDK library for TypeScript
-      - npm install -g aws-cdk  # Install AWS CDK CLI globally
+      - echo "Installing Node.js and Python dependencies..."
+      - npm install aws-cdk-lib  # Install AWS CDK library dependency
+      - npm install -g aws-cdk   # Install AWS CDK CLI globally
       - npm install typescript ts-node  # Install TypeScript and ts-node
-      - pip install -r requirements.txt  # Install Python dependencies
+      - pip install -r requirements.txt  # Install Python dependencies if used
+
   pre_build:
     commands:
       - echo "Checking environment information..."
-      - node -v # Node.js version
-      - npm -v # NPM version
-      - cdk --version  # Verify CDK is installed correctly
+      - node -v  # Display Node.js version
+      - npm -v  # Display NPM version
+      - cdk --version  # Display AWS CDK version
+      - echo "Listing project root contents:"  # Debug the directory structure
+      - ls -la  # Verify the files and directories at the root
+      - echo "Listing contents of lambda directory:"
+      - ls -la lambda  # Verify the contents of the 'lambda' directory, adjust the path if necessary
       - echo "Synthesizing the CDK stack..."
-      - npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts
-      - cdk synth --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts"
+      - npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts  # Run the CDK entry point to synthesize the stack
+
   build:
     commands:
+      - echo "Running unit tests..."
+      - pytest  # Run Python tests if available
       - echo "Packaging Lambda function..."
       - cd lambda
-      - zip -r function.zip .  # Package the Lambda function
+      - zip -r ../lambda.zip .  # Package the Lambda function
       - cd ..
+
   post_build:
     commands:
       - echo "Deploying the CDK stack..."
       - cdk deploy --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts" --require-approval never
+
 artifacts:
   files:
-    - lambda/function.zip  # Include the packaged Lambda function
+    - lambda.zip  # Include the packaged Lambda function in artifacts
     - cdk.out/**/*  # Include synthesized CDK output for deployment
