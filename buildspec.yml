@@ -6,40 +6,37 @@ phases:
       nodejs: 18
       python: 3.9
     commands:
-      - echo "Installing Node.js and Python dependencies..."
-      - npm install aws-cdk-lib  # Install AWS CDK library dependency
-      - npm install -g aws-cdk   # Install AWS CDK CLI globally
-      - npm install typescript ts-node  # Install TypeScript and ts-node
-      - pip install -r requirements.txt  # Install Python dependencies if used
+      - echo "Installing CDK and dependencies..."
+      - cd cdk
+      - npm install  # Install Node.js dependencies for the CDK app
+      - pip install -r ../requirements.txt  # Install Python dependencies for the Lambda function
 
   pre_build:
     commands:
       - echo "Checking environment information..."
       - node -v  # Display Node.js version
       - npm -v  # Display NPM version
+      - cd ../cdk
       - cdk --version  # Display AWS CDK version
-      - echo "Listing project root contents:"  # Debug the directory structure
-      - ls -la  # Verify the files and directories at the root
-      - echo "Listing contents of lambda directory:"
-      - ls -la lambda  # Verify the contents of the 'lambda' directory, adjust the path if necessary
-      - echo "Synthesizing the CDK stack..."
-      - npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts  # Run the CDK entry point to synthesize the stack
+      - echo "Listing contents of the 'lambda' directory:"
+      - ls -la ../lambda/  # Verify lambda directory contents
 
   build:
     commands:
-      - echo "Running unit tests..."
-      - pytest  # Run Python tests if available
+      - echo "Synthesizing the CDK stack..."
+      - cdk synth --app "npx ts-node --prefer-ts-exts ./bin/cdk.ts"  # Adjust path if the entry file name differs
       - echo "Packaging Lambda function..."
-      - cd lambda
-      - zip -r ../lambda.zip .  # Package the Lambda function
-      - cd ..
+      - cd ../lambda
+      - zip handler.zip handler.py  # Package the Lambda function
+      - mv handler.zip ../cdk  # Move the packaged zip file to the CDK directory for deployment access
 
   post_build:
     commands:
       - echo "Deploying the CDK stack..."
-      - cdk deploy --app "npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts" --require-approval never
+      - cd ../cdk
+      - cdk deploy --app "npx ts-node --prefer-ts-exts ./bin/cdk.ts" --require-approval never
 
 artifacts:
   files:
-    - lambda.zip  # Include the packaged Lambda function in artifacts
-    - cdk.out/**/*  # Include synthesized CDK output for deployment
+    - cdk/handler.zip  # Include the packaged Lambda function
+    - cdk/cdk.out/**/*  # Include synthesized CDK output for deployment
