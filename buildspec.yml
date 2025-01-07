@@ -20,7 +20,7 @@ phases:
       - echo "Current folder path is:"
       - pwd
 
-      
+      - ls -la ../
       - echo "Synthesizing the CDK stack..."
       - ls -la
       - npx ts-node --prefer-ts-exts ./cdk/bin/cdk.ts
